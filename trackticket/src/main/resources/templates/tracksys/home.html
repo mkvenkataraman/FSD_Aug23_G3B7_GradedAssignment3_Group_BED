@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<!-- Bootstrap CSS for styling -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<!-- Custom styles -->
+	<style>
+		/* Style for scrollable table */
+		.scrollable-table {
+			display: block;
+			max-height: 325px;
+			overflow-y: auto;
+			overflow-x: hidden;
+		}
+
+		/* Sticky header for table */
+		.table thead th {
+			position: sticky;
+			top: 0;
+			background: white;
+			z-index: 10;
+		}
+
+		/* Footer styling */
+		footer {
+			position: fixed;
+			left: 0;
+			bottom: 0;
+			width: 100%;
+			background-color: blue;
+			color: white;
+			text-align: left;
+			justify-content: left;
+			padding: .25px .25px;
+		}
+
+		/* Container to center content in viewport */
+		.container-fluid {
+			min-height: 80vh;
+			/* Full height of the viewport */
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		/* Styling for navbar */
+		.navbar {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+		}
+
+		/* Styling for title with glitter effect */
+		.glittering-title {
+			color: white;
+			font-size: 48px;
+			/* Adjust as needed */
+			animation: glitter 1.5s linear infinite;
+			text-shadow: 2px 2px 4px #000000;
+		}
+
+		@keyframes flickerAnimation {
+			0% {
+				opacity: 1;
+			}
+
+			50% {
+				opacity: 0;
+			}
+
+			100% {
+				opacity: 1;
+			}
+		}
+
+		.flicker-text {
+			animation: flickerAnimation 1s infinite;
+		}
+	</style>
+
+	<title>Ticket Tracker</title>
+</head>
+
+<body>
+
+	<!-- Main container with top padding -->
+	<div class="container-fluid mt-3 pt-2">
+		<!-- Navigation bar with title -->
+		<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+			<h1 class="glittering-title">Ticket Tracker by GL IIT-R FSD Aug-23 G3 B7</h1>
+		</nav>
+	</div>
+
+	<!-- Button for navigation to the ticketrack list -->
+	<div class="text-center mt-1">
+		<a href="/ticketrack/list" class="btn btn-primary btn-lg">
+			<span class="flicker-text">Press to Track Ticket</span>
+		</a>
+	</div>
+
+	<!-- Footer with copyright information -->
+	<footer>
+		<h4>© 2023 IIT-R GL FSD Aug-23 G3 B7. All rights reserved.</h4>
+	</footer>
+
+</body>
+
+</html>

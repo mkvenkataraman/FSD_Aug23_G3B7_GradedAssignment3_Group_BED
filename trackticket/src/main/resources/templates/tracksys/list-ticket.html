@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<!-- Bootstrap CSS for styling -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<!-- Custom styles for the application -->
+	<style>
+		/* Style for making the table scrollable */
+		.scrollable-table {
+			display: block;
+			max-height: 325px;
+			overflow-y: auto;
+			overflow-x: hidden;
+		}
+
+		/* Sticky header for the table */
+		.table thead th {
+			position: sticky;
+			top: 0;
+			background: white;
+			z-index: 10;
+		}
+
+		/* Footer styling */
+		footer {
+			position: fixed;
+			left: 0;
+			bottom: 0;
+			width: 100%;
+			background-color: blue;
+			color: white;
+			text-align: left;
+			justify-content: left;
+			padding: .25px .25px;
+		}
+	</style>
+
+	<title>List Tickets</title>
+</head>
+
+<body>
+
+	<!-- Main container with padding -->
+	<div class="container-fluid mt-5 pt-2">
+		<!-- Navigation bar -->
+		<nav class="navbar navbar-expand-sm bg-primary navbar-dark fixed-top">
+			<h4 style="color:white;">Ticket Tracker Application&nbsp;&nbsp;&nbsp;</h4>
+			<!-- Navigation links -->
+			<form class="form-inline" action="#">
+				<ul class="navbar-nav">
+					<li class="nav-item mr-sm-2"><a style="font-size: 18px; color: white"
+							href="/ticketrack/list">Tickets&nbsp;</a></li>
+					<li class="nav-item mr-sm-2"><a style="font-size: 18px; color: white"
+							href="/ticketrack/showTicketFormForAdd">New Ticket</a></li>
+				</ul>
+			</form>
+		</nav>
+	</div>
+
+	<!-- Search form container -->
+	<div class="container mt-3 pt-2">
+		<h3 style="text-align: left; color: black;">List of Tickets</h3>
+		<!-- Search form -->
+		<form class="form-inline" action="/ticketrack/search" method="get" style="display: block;">
+			<div style="display: flex; align-items: center; margin-bottom: 10px;">
+				<input class="form-control mr-sm-2" type="text" size="50" name="query"
+					placeholder="Search on Title and Description" style="margin-right: 10px;">
+				<button class="btn btn-success mr-sm-2" type="submit">Search</button>
+			</div>
+		</form>
+	</div>
+
+	<!-- Table container -->
+	<div class="container mt-3 pt-2">
+		<!-- Tickets table -->
+		<table class="table table-striped scrollable-table">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Ticket Title</th>
+					<th>Ticket Short Description</th>
+					<th>Ticket Created On</th>
+					<th>Ticket Updated On</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- Loop through tickets -->
+				<tr th:each="ticket, rCount: ${tickets}">
+					<td th:text="${rCount.count}"></td>
+					<td th:text="${ticket.title}"></td>
+					<td th:text="${ticket.shortdescription}"></td>
+					<td th:text="${#temporals.format(ticket.created, 'dd-MM-yyyy HH:mm')}"></td>
+					<td
+						th:text="${ticket.updated != null ? #temporals.format(ticket.updated, 'dd-MM-yyyy HH:mm') : 'Not Applicable'}">
+					</td>
+					<!-- Action buttons -->
+					<td>
+						<!-- View button -->
+						<a th:href="@{/ticketrack/ticketFormForView/{id}(id=${ticket.id})}" class="view-link">
+							<i class="fa fa-eye" style="font-size: 28px; color:green;"></i>
+						</a>
+						&nbsp;
+
+						<!-- Edit button -->
+						<a th:href="@{/ticketrack/ticketFormForEdit/{id}(id=${ticket.id})}">
+							<i class="fa fa-edit" style="font-size: 28px;color:blue"></i>
+						</a>
+						&nbsp;
+
+						<!-- Delete button with confirmation dialog -->
+						<a th:href="@{/ticketrack/delete/{id}(id=${ticket.id})}"
+							onclick="if (!(confirm('Are you sure you want to delete this ticket?'))) return false">
+							<i class="fa fa-trash" style="font-size: 28px;color:red"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<!-- Footer section -->
+	<footer>
+		<p>© 2023 IIT-R GL FSD Aug-23 G3 B7. All rights reserved.</p>
+	</footer>
+
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<style>
+		.scrollable-table {
+			height: 325px;
+			width: auto;
+			overflow-y: auto;
+			display: block;
+		}
+
+		.my-container {
+			width: 70%;
+			margin: auto;
+		}
+
+		footer {
+			position: fixed;
+			left: 0;
+			bottom: 0;
+			width: 100%;
+			background-color: blue;
+			color: white;
+			text-align: left;
+			padding: 1px 1px;
+		}
+
+		.ckeditor-custom {
+			max-width: 100%;
+			height: 100px;
+			/* Adjust as necessary */
+		}
+
+		.emphasize-label {
+			font-size: 16px;
+			/* or any size you prefer */
+			font-weight: bold;
+		}
+	</style>
+
+	<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+
+	<title>Ticket Form</title>
+</head>
+
+<body>
+	<div class="container-fluid mt-5 pt-2">
+		<nav class="navbar navbar-expand-sm bg-primary navbar-dark fixed-top">
+			<h4 style="left:auto; color:white;">Ticket Tracker Application&nbsp;&nbsp;&nbsp;</h4>
+			<form class="form-inline" action="#">
+				<ul class="navbar-nav">
+					<li class="nav-item mr-sm-2">
+						<a style="font-size: 18px; color: white" href="/ticketrack/list">Tickets&nbsp;</a>
+					</li>
+					<li class="nav-item mr-sm-2">
+						<a style="font-size: 18px; color: white" href="/tracksys/showTicketFormForAdd">New Ticket</a>
+					</li>
+				</ul>
+			</form>
+		</nav>
+	</div>
+
+	<div class="container my-container mt-2 pt-2 border">
+		<div class="container">
+			<div class="panel-heading">
+				<h4 style="text-align: center; color: black; background-color: #f0f0f0;">Create Ticket</h4>
+			</div>
+		</div>
+		<div class="panel-body">
+			<form th:action="@{/ticketrack/saveTicket}" th:object="${ticket}" method="post">
+				<!-- the time zone is sent as a hidden field for the purpose of create-->
+				<input type="hidden" name="userTimeZone" id="userTimeZone" value="Asia/Kolkata">
+
+				<div>
+					<input type="hidden" th:field="*{id}">
+				</div>
+				<div class="form-group">
+					<label for="title" class="emphasize-label">Title</label>
+					<input type="text" class="form-control" name="title" placeholder="Enter Ticket Title"
+						th:field="*{title}" required="required" maxlength="25">
+				</div>
+				<div class="form-group">
+					<label for="shortdescription" class="emphasize-label">Short Description</label>
+					<input type="text" class="form-control" name="shortdescription"
+						placeholder="Enter Ticket Description" th:field="*{shortdescription}" required="required"
+						maxlength="50">
+				</div>
+				<div class="form-group">
+					<label for="content" class="emphasize-label">Content</label>
+					<textarea class="form-control ckeditor-custom" name="content" th:field="*{content}"
+						data-placeholder="Enter Content" required="required"></textarea>
+				</div>
+				<script>
+					CKEDITOR.replace('content', {
+						toolbar: [
+							{name: 'basicstyles', items: ['Bold', 'Italic']},
+							{name: 'links', items: ['Link', 'Unlink']},
+							{name: 'paragraph', items: ['BulletedList', 'NumberedList', '-', 'Outdent', 'Indent']},
+							{name: 'insert', items: ['Image', 'Blockquote', 'Table', 'HorizontalRule', 'Iframe']},
+							{name: 'undo', items: ['Undo', 'Redo']}
+						],
+						removePlugins: 'elementspath,save,newpage,preview,print,templates,pastefromword,pastetext,format,stylescombo,font,about,maximize,showblocks,newpage,exportpdf',
+						width: 'auto',
+						height: '100px'
+					});
+				</script>
+				<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+			</form>
+		</div>
+	</div>
+
+	<footer>
+		<p>© 2023 IIT-R GL FSD Aug-23 G3 B7. All rights reserved.</p>
+	</footer>
+</body>
+
+</html>
